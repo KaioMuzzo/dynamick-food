@@ -26,3 +26,31 @@ Gerado automaticamente — não edite manualmente as linhas da tabela.
 | 13 | `password` com menos de 8 caracteres | `password: "123"` | 400 VALIDATION_ERROR |
 | 14 | Email já cadastrado | email de um usuário existente | 409 CONFLICT |
 | 15 | CNPJ já cadastrado | cnpj de uma empresa existente | 409 CONFLICT |
+
+---
+
+## POST /api/auth/register/driver
+
+> Cria um usuário com role `DRIVER` e o perfil de entregador associado. Status inicial `PENDENTE`. Endpoint público.
+
+| # | Cenário | Input | Esperado |
+|---|---|---|---|
+| 1 | Dados válidos completos | name, cpf (11 dígitos), cnh (mín. 11 chars), phone, email, password válidos | 201 + { id: string } |
+| 2 | Campo `name` ausente | body sem `name` | 400 VALIDATION_ERROR |
+| 3 | Campo `cpf` ausente | body sem `cpf` | 400 VALIDATION_ERROR |
+| 4 | Campo `cnh` ausente | body sem `cnh` | 400 VALIDATION_ERROR |
+| 5 | Campo `phone` ausente | body sem `phone` | 400 VALIDATION_ERROR |
+| 6 | Campo `email` ausente | body sem `email` | 400 VALIDATION_ERROR |
+| 7 | Campo `password` ausente | body sem `password` | 400 VALIDATION_ERROR |
+| 8 | Body vazio | `{}` | 400 VALIDATION_ERROR |
+| 9 | `name` string vazia | `name: ""` | 400 VALIDATION_ERROR |
+| 10 | `cpf` com menos de 11 dígitos | `cpf: "1234"` | 400 VALIDATION_ERROR |
+| 11 | `cpf` com mais de 11 dígitos | `cpf: "123456789012"` | 400 VALIDATION_ERROR |
+| 12 | `cnh` com menos de 11 caracteres | `cnh: "123"` | 400 VALIDATION_ERROR |
+| 13 | `phone` com menos de 10 caracteres | `phone: "119999"` | 400 VALIDATION_ERROR |
+| 14 | `email` inválido | `email: "nao-é-email"` | 400 VALIDATION_ERROR |
+| 15 | `password` com menos de 8 caracteres | `password: "123"` | 400 VALIDATION_ERROR |
+| 16 | Email já cadastrado | email de um usuário existente | 409 CONFLICT |
+| 17 | CPF já cadastrado | cpf de um entregador existente | 409 CONFLICT |
+
+> **Nota:** O entregador é criado com status `PENDENTE` independente dos dados enviados. A aprovação é feita por um admin posteriormente.

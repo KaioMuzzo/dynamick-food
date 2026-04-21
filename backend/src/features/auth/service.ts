@@ -1,5 +1,5 @@
 import { prisma } from '../../lib/prisma'
-import { RegisterCompanyInput } from 'shared/schemas/auth'
+import { RegisterCompanyInput, RegisterDriverInput } from 'shared/schemas/auth'
 import bcrypt from 'bcryptjs'
 
 export async function registerCompany(data: RegisterCompanyInput) {
@@ -20,7 +20,32 @@ export async function registerCompany(data: RegisterCompanyInput) {
         },
         select: {
             id: true,
-        }
+        },
+    })
+
+    return user
+}
+
+export async function registerDriver(data: RegisterDriverInput) {
+    const hashedPassword = await bcrypt.hash(data.password, 12)
+
+    const user = await prisma.user.create({
+        data: {
+            email: data.email,
+            password: hashedPassword,
+            role: 'DRIVER',
+            driver: {
+                create: {
+                    name: data.name,
+                    cpf: data.cpf,
+                    cnh: data.cnh,
+                    phone: data.phone,
+                },
+            },
+        },
+        select: {
+            id: true,
+        },
     })
 
     return user

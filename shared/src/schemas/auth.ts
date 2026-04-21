@@ -9,3 +9,14 @@ export const registerCompanySchema = z.object({
 })
 
 export type RegisterCompanyInput = z.infer<typeof registerCompanySchema>
+
+export const registerDriverSchema = z.object({
+    name: z.string().min(1),
+    cpf: z.string().length(11),
+    cnh: z.string().min(11),
+    phone: z.string().min(10),
+    email: z.email(),
+    password: z.string().min(8),
+})
+
+export type RegisterDriverInput = z.infer<typeof registerDriverSchema>
