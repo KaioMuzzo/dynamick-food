@@ -11,3 +11,248 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+enum Role {
+  COMPANY
+  DRIVER
+  ADMIN
+}
+
+enum DriverStatus {
+  PENDENTE
+  ATIVO
+  REJEITADO
+}
+
+enum VehicleType {
+  MOTO
+  CARRO
+  VAN
+  BICICLETA
+}
+
+enum DocumentOwnerType {
+  DRIVER
+  VEHICLE
+  COMPANY
+}
+
+enum DocumentType {
+  CNH
+  SELFIE
+  COMPROVANTE_RESIDENCIA
+  CRLV
+  FOTO_VEICULO
+  CNPJ
+  CONTRATO_SOCIAL
+  DOCUMENTO_RESPONSAVEL
+}
+
+enum DocumentStatus {
+  PENDENTE
+  APROVADO
+  REJEITADO
+}
+
+enum DeliveryStatus {
+  PROCURANDO
+  ACEITA
+  A_CAMINHO_COLETA
+  AGUARDANDO_COLETA
+  EM_ENTREGA
+  FINALIZADA
+  CANCELADA
+  SEM_ENTREGADOR
+  CANCELADA_PELO_CLIENTE
+  CANCELADA_PELO_ENTREGADOR
+}
+
+enum PaymentMethod {
+  PIX
+  CARTAO
+  CARTEIRA
+}
+
+enum PaymentStatus {
+  PENDENTE
+  PAGO
+  ESTORNADO
+  FALHOU
+}
+
+model User {
+  id String @id @default(uuid())
+  email String @unique
+  password String
+  role Role
+  refreshToken String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company Company?
+  driver Driver?
+  notifications Notification[]
+
+  @@map("users")
+}
+
+model Company {
+  id String @id @default(uuid())
+  userId String @unique
+  name String
+  cnpj String @unique
+  phone String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+  deliveries Delivery[]
+  ratings Rating[]
+  documents Document[]
+
+  @@map("companies")
+}
+
+model Driver {
+  id String @id @default(uuid())
+  userId String @unique
+  name String
+  cpf String @unique
+  cnh String
+  phone String
+  status DriverStatus @default(PENDENTE)
+  rejectionReason String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+  vehicles Vehicle[]
+  deliveries Delivery[]
+  ratings Rating[]
+  documents Document[]
+
+  @@map("drivers")
+}
+
+model Vehicle {
+  id String @id @default(uuid())
+  driverId String
+  plate String? @unique
+  type VehicleType
+  brand String
+  model String
+  year Int
+  color String
+  isActive Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  driver Driver @relation(fields: [driverId], references: [id])
+  deliveries Delivery[]
+  documents Document[]
+
+  @@map("vehicles")
+}
+
+model Document {
+  id String @id @default(uuid())
+  driverId String?
+  vehicleId String?
+  companyId String?
+  ownerType DocumentOwnerType
+  type DocumentType
+  originalName String
+  storagePath String
+  mimeType String
+  size Int
+  status DocumentStatus @default(PENDENTE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  driver Driver? @relation(fields: [driverId], references: [id])
+  vehicle Vehicle? @relation(fields: [vehicleId], references: [id])
+  company Company? @relation(fields: [companyId], references: [id])
+
+  @@map("documents")
+}
+
+model Delivery {
+  id String @id @default(uuid())
+  companyId String
+  driverId String?
+  vehicleId String?
+  pickupAddress String
+  pickupLat Float
+  pickupLng Float
+  deliveryAddress String
+  deliveryLat Float
+  deliveryLng Float
+  itemType String
+  observations String?
+  distanceKm Float
+  estimatedTime Int
+  totalPrice Decimal
+  confirmationCode String
+  status DeliveryStatus @default(PROCURANDO)
+  acceptedAt DateTime?
+  pickedUpAt DateTime?
+  deliveredAt DateTime?
+  canceledAt DateTime?
+  realDistanceKm Float?
+  realDuration Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id])
+  driver Driver? @relation(fields: [driverId], references: [id])
+  vehicle Vehicle? @relation(fields: [vehicleId], references: [id])
+  payment Payment?
+  rating Rating?
+
+  @@map("deliveries")
+}
+
+model Payment {
+  id String @id @default(uuid())
+  deliveryId String @unique
+  amount Decimal
+  method PaymentMethod
+  status PaymentStatus @default(PENDENTE)
+  paidAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  delivery Delivery @relation(fields: [deliveryId], references: [id])
+
+  @@map("payments")
+}
+
+model Rating {
+  id String @id @default(uuid())
+  deliveryId String @unique
+  companyId String
+  driverId String
+  score Int
+  comment String?
+  createdAt DateTime @default(now())
+
+  delivery Delivery @relation(fields: [deliveryId], references: [id])
+  company Company @relation(fields: [companyId], references: [id])
+  driver Driver @relation(fields: [driverId], references: [id])
+
+  @@map("ratings")
+}
+
+model Notification {
+  id String @id @default(uuid())
+  userId String
+  title String
+  body String
+  type String
+  read Boolean @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("notifications")
+}

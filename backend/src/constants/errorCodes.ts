@@ -5,6 +5,7 @@ const ERROR_CODES = {
     UNAUTHORIZED:        { statusCode: 401 },
     FORBIDDEN:           { statusCode: 403 },
     TOO_MANY_REQUESTS:   { statusCode: 429 },
+    CONFLICT:            { statusCode: 409 },
 } as const
 
 export type ErrorCodeKey = keyof typeof ERROR_CODES
