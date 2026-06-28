@@ -9,7 +9,7 @@ export async function registerCompany(data: RegisterCompanyInput) {
         data: {
             email: data.email,
             password: hashedPassword,
-            role: 'COMPANY',
+            role: 'company',
             company: {
                 create: {
                     name: data.name,
@@ -33,7 +33,7 @@ export async function registerDriver(data: RegisterDriverInput) {
         data: {
             email: data.email,
             password: hashedPassword,
-            role: 'DRIVER',
+            role: 'driver',
             driver: {
                 create: {
                     name: data.name,

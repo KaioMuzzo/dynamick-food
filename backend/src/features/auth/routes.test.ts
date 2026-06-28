@@ -121,7 +121,7 @@ describe('POST /api/auth/register/company', () => {
             const res = await request(app).post('/api/auth/register/company').send({ ...validBody, role: 'ADMIN', refreshToken: 'abc' })
             expect(res.status).toBe(201)
             const user = await prisma.user.findUnique({ where: { id: res.body.id } })
-            expect(user?.role).toBe('COMPANY')
+            expect(user?.role).toBe('company')
         })
 
         it('sensitive data -> resposta não expõe password new refreshToken', async () => {
@@ -270,8 +270,8 @@ describe('POST /api/auth/register/driver', () => {
             const res = await request(app).post('/api/auth/register/driver').send({ ...validDriverBody, role: 'ADMIN', status: 'ATIVO' })
             expect(res.status).toBe(201)
             const user = await prisma.user.findUnique({ where: { id: res.body.id }, include: { driver: true } })
-            expect(user?.role).toBe('DRIVER')
-            expect(user?.driver?.status).toBe('PENDENTE')
+            expect(user?.role).toBe('driver')
+            expect(user?.driver?.status).toBe('pending')
         })
 
         it('sensitive data → resposta não expõe password, cpf nem refreshToken', async () => {

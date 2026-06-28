@@ -5,7 +5,7 @@ export async function seedDriver() {
         data: {
             email: 'seed@driver.com',
             password: 'hash',
-            role: 'DRIVER',
+            role: 'driver',
             driver: {
                 create: {
                     name: 'Driver Seed',

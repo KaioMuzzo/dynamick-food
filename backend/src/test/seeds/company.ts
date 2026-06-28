@@ -5,7 +5,7 @@ export async function seedCompany() {
         data: {
             email: 'seed@empresa.com',
             password: 'fakepassword',
-            role: 'COMPANY',
+            role: 'company',
             company: {
                 create: {
                     name: 'Empresa Seed',
