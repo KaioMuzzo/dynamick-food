@@ -460,6 +460,139 @@ Examples:
 
 ---
 
+## Commit Convention
+
+Never run `git commit`. At most use `git add` to split commits when many files are staged together — otherwise just provide the commit message.
+
+### Format
+
+```text
+<type>(<scope>): <short summary in English>
+
+- Bullet point 1
+- Bullet point 2
+- Bullet point 3
+...
+```
+
+### Rules
+
+#### 1. Title in English
+
+- Short and to the point
+- Follows Conventional Commits
+
+Examples:
+
+```text
+feat(meetings): add create endpoint with header snapshot
+fix(billing): make aid_cost non-nullable to prevent null persistence
+refactor(utils): move computeDurationMinutes to shared utils
+```
+
+#### 2. Bullets in English
+
+- Always start with an imperative verb
+
+Examples:
+
+- Add
+- Update
+- Remove
+- Replace
+- Implement
+- Expose
+- Rename
+- Move
+- Allow
+- Prevent
+
+#### 3. No artificial line breaks
+
+Each bullet must stay on a single line.
+
+Correct:
+
+```text
+- Add GET /meetings/:meetingId protected by requireAbility('read', 'Ata')
+```
+
+Incorrect:
+
+```text
+- Add GET /meetings/:meetingId protected by
+  requireAbility('read', 'Ata')
+```
+
+#### 4. Focus on the effect of the change
+
+- Explain what changed
+- Explain the impact when relevant
+- Avoid internal details with no value for the history
+
+#### 5. No PR format
+
+Do not include:
+
+- Context
+- How to test
+- Risks
+- Screenshots
+
+The commit must contain only:
+
+```text
+Title
+
+- Change 1
+- Change 2
+- Change 3
+```
+
+#### 6. Technical and professional tone
+
+Avoid generic messages like:
+
+```text
+Improve code quality
+Various fixes
+Minor changes
+Misc updates
+```
+
+Prefer describing exactly what was changed.
+
+#### 7. Preserve important business rules
+
+When relevant, explicitly mention:
+
+- anti-IDOR
+- visibility rules
+- ownership checks
+- billing recalculation
+- snapshot persistence
+- status transitions
+- access control
+- synchronization behavior
+- migration behavior
+
+### Template
+
+```text
+<type>(<scope>): <summary>
+
+- Change 1
+- Change 2
+- Change 3
+- Change 4
+```
+
+### Most important rule
+
+**Never break bullets across multiple lines.**
+
+---
+
 ## What NOT to Do
 
 - Do not call `app.listen()` in `app.ts`
