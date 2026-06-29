@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react'
-import background from '../../../assets/welcome-background.png'
+import background from '../../../assets/welcome-background.jpg'
 import logo from '../../../assets/brand-logo.svg'
 
 // Decorative "speed line" strokes from the design (Figma: azul-detalhes lines).
