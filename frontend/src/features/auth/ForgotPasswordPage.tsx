@@ -30,16 +30,16 @@ export function ForgotPasswordPage() {
 
   return (
     <AuthLayout>
-      <div className="text-center">
-        <h2 className="text-[18px] font-semibold text-accent-blue">
+      <div>
+        <h2 className="text-[16px] font-semibold text-text-muted underline underline-offset-4">
           Esqueci minha senha
         </h2>
-        <p className="mt-2 text-[13px] font-medium text-text-muted">
+        <p className="mt-2 text-[12px] font-medium text-text-muted">
           Enviamos um código de autenticação no seu e-mail para a renovação de senha
         </p>
       </div>
 
-      <form onSubmit={onSubmit} className="mt-6 flex flex-col gap-5">
+      <form onSubmit={onSubmit} className="mt-5 flex flex-col gap-5">
         <AuthField
           label="Código"
           icon={KeyRound}
