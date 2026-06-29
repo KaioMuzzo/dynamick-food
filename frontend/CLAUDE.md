@@ -290,10 +290,22 @@ messages — it never shows raw codes or stack traces to the user.
 
 ### Naming
 
+**Every identifier in the codebase is in English — no exceptions.** This includes
+variables, functions, components, types, files, folders, route paths, CSS classes,
+design tokens, query keys, and test descriptions. The only Portuguese allowed is
+**user-facing copy** (text rendered on screen, `aria-label`s, placeholders).
+
 - Variables, functions, hooks → `camelCase` in English (hooks start with `use`)
 - Components, types → `PascalCase` in English
 - Component files → `PascalCase.tsx`; non-component files → `camelCase.ts`
 - Global constants → `UPPER_SNAKE_CASE` in English
+- Route paths → English kebab-case (`/system-error`, never `/erro-sistema`)
+- Design tokens → English kebab-case (`--color-accent-blue`, never `--color-azul-detalhes`)
+
+**Figma is not the source of naming.** Figma variables are often in Portuguese; the design
+tool is not under our control, the code is. When translating a design to code, **rename
+every token, layer, and component to English** — keep a comment mapping the original Figma
+name only when it helps traceability (e.g. `--color-accent-blue: #0063ff; /* Figma: azul-detalhes */`).
 
 ### TypeScript
 
