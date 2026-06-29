@@ -1,22 +1,41 @@
 import { z } from 'zod'
 
-export const registerCompanySchema = z.object({
+const registerCompanySchema = z.object({
     name: z.string().min(1),
     cnpj: z.string().length(14),
     phone: z.string().min(10),
     email: z.email(),
     password: z.string().min(8),
-})
+});
 
-export type RegisterCompanyInput = z.infer<typeof registerCompanySchema>
+type RegisterCompanyInput = z.infer<typeof registerCompanySchema>;
 
-export const registerDriverSchema = z.object({
+const registerDriverSchema = z.object({
     name: z.string().min(1),
     cpf: z.string().length(11),
     cnh: z.string().min(11),
     phone: z.string().min(10),
     email: z.email(),
     password: z.string().min(8),
-})
+});
 
-export type RegisterDriverInput = z.infer<typeof registerDriverSchema>
+type RegisterDriverInput = z.infer<typeof registerDriverSchema>;
+
+const loginSchema = z.object({
+    email: z.email(),
+    password: z.string().min(8),
+});
+
+type LoginInput = z.infer<typeof loginSchema>;
+
+export {
+    registerCompanySchema,
+    registerDriverSchema,
+    loginSchema
+}
+
+export type {
+    RegisterCompanyInput,
+    RegisterDriverInput,
+    LoginInput
+}
