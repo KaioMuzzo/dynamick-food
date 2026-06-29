@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from 'react-router-dom'
-import { KeyRound } from 'lucide-react'
+import { Option } from 'lucide-react'
 import { resetPasswordSchema, type ResetPasswordInput } from 'shared/schemas/auth'
 import { messageFromError } from '../../lib/errorMessages'
 import { AuthLayout } from './components/AuthLayout'
@@ -42,7 +42,7 @@ export function ForgotPasswordPage() {
       <form onSubmit={onSubmit} className="mt-5 flex flex-col gap-5">
         <AuthField
           label="Código"
-          icon={KeyRound}
+          icon={Option}
           autoComplete="one-time-code"
           placeholder="Digite o Código"
           error={errors.code?.message}

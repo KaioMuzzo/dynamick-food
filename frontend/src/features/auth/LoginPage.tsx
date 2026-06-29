@@ -49,7 +49,7 @@ export function LoginPage() {
         />
 
         <PasswordField
-          label="SENHA"
+          label="Senha"
           autoComplete="current-password"
           placeholder="Digite sua senha"
           error={errors.password?.message}
@@ -72,7 +72,7 @@ export function LoginPage() {
       <button
         type="button"
         onClick={() => navigate('/forgot-password')}
-        className="mt-5 w-full text-center text-[15px] font-semibold text-accent-blue underline-offset-4 hover:underline"
+        className="mt-5 w-full text-center text-[15px] font-semibold text-accent-blue-soft transition-opacity hover:opacity-80"
       >
         Esqueci minha senha
       </button>
