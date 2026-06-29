@@ -28,14 +28,23 @@ const loginSchema = z.object({
 
 type LoginInput = z.infer<typeof loginSchema>;
 
+const resetPasswordSchema = z.object({
+    code: z.string().min(1),
+    password: z.string().min(8),
+});
+
+type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
+
 export {
     registerCompanySchema,
     registerDriverSchema,
-    loginSchema
+    loginSchema,
+    resetPasswordSchema
 }
 
 export type {
     RegisterCompanyInput,
     RegisterDriverInput,
-    LoginInput
+    LoginInput,
+    ResetPasswordInput
 }
