@@ -90,7 +90,7 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       lucide-react:
-        specifier: ^0.474.0
+        specifier: 0.474.0
         version: 0.474.0(react@19.2.5)
       react:
         specifier: ^19.0.0

@@ -21,6 +21,27 @@ const registerDriverSchema = z.object({
 
 type RegisterDriverInput = z.infer<typeof registerDriverSchema>;
 
+const vehicleTypeSchema = z.enum(['motorcycle', 'car', 'van', 'bicycle']);
+
+type VehicleTypeInput = z.infer<typeof vehicleTypeSchema>;
+
+const vehicleSchema = z.object({
+    type: vehicleTypeSchema,
+    plate: z.string().min(1),
+    model: z.string().min(1),
+    color: z.string().min(1),
+});
+
+type VehicleInput = z.infer<typeof vehicleSchema>;
+
+// Full driver registration wizard: personal data plus the driver's vehicle.
+// Documents are uploaded through a separate endpoint and are not part of this schema.
+const registerDriverWizardSchema = registerDriverSchema.extend({
+    vehicle: vehicleSchema,
+});
+
+type RegisterDriverWizardInput = z.infer<typeof registerDriverWizardSchema>;
+
 const loginSchema = z.object({
     email: z.email(),
     password: z.string().min(8),
@@ -38,6 +59,9 @@ type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
 export {
     registerCompanySchema,
     registerDriverSchema,
+    vehicleTypeSchema,
+    vehicleSchema,
+    registerDriverWizardSchema,
     loginSchema,
     resetPasswordSchema
 }
@@ -45,6 +69,9 @@ export {
 export type {
     RegisterCompanyInput,
     RegisterDriverInput,
+    VehicleTypeInput,
+    VehicleInput,
+    RegisterDriverWizardInput,
     LoginInput,
     ResetPasswordInput
 }
