@@ -16,7 +16,9 @@ config.resolver.nodeModulesPaths = [
 ];
 
 // Import .svg files as React components via react-native-svg-transformer.
-config.transformer.babelTransformerPath = require.resolve('react-native-svg-transformer');
+// Use the `/expo` entry so it delegates to Expo's own babel transformer
+// (babel-preset-expo) — the documented usage for Expo projects.
+config.transformer.babelTransformerPath = require.resolve('react-native-svg-transformer/expo');
 config.resolver.assetExts = config.resolver.assetExts.filter((ext) => ext !== 'svg');
 config.resolver.sourceExts = [...config.resolver.sourceExts, 'svg'];
 
