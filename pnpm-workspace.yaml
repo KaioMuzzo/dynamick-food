@@ -2,7 +2,9 @@ packages:
   - backend
   - frontend
   - shared
+  - mobile
 allowBuilds:
   '@prisma/engines': true
   esbuild: true
   prisma: true
+  unrs-resolver: true
