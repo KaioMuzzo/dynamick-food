@@ -1,8 +1,13 @@
 packages:
   - backend
-  - frontend
   - shared
   - mobile
+# Force a single React version across the workspace. The prisma CLI pulls in
+# @prisma/studio-core (a React UI) on react 19.2.x; without this, a second React
+# leaks into the mobile Metro bundle → "Invalid hook call" at the first hook.
+overrides:
+  react: 19.1.0
+  react-dom: 19.1.0
 allowBuilds:
   '@prisma/engines': true
   esbuild: true

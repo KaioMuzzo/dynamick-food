@@ -2,7 +2,6 @@
     "name": "projects-label",
     "private": true,
     "scripts": {
-        "dev:backend": "pnpm --filter backend dev",
-        "dev:frontend": "pnpm --filter frontend dev"
+        "dev:backend": "pnpm --filter backend dev"
     }
 }
